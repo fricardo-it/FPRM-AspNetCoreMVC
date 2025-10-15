@@ -1,0 +1,34 @@
+﻿@model List<FPRMAspNetCoreMVC.Models.Appointment>
+
+<h2>Pending Appointment Requests</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Tenant</th>
+        <th>Building</th>
+        <th>Appointment Date</th>
+        <th>Message</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var appointment in Model)
+    {
+        <tr>
+            <td>@appointment.Tenant.Name</td>
+            <td>@appointment.Building.Name</td>
+            <td>@appointment.AppointmentDate</td>
+            <td>@appointment.Message</td>
+            <td>
+                    <a class="btn btn-link" asp-controller="Appointments" asp-action="Approve" asp-route-id="@appointment.Id">Approve</a>
+                <a class="btn btn-link" asp-controller="Appointments" asp-action="Reject" asp-route-id="@appointment.Id">Reject</a>
+
+
+                @* <a href="@Url.Action("Approve", new { id = appointment.Id })">Approve</a> | *@
+                    @* <a href="@Url.Action("Reject", new { id = appointment.Id })">Reject</a> *@
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

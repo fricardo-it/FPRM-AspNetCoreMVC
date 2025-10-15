@@ -1,0 +1,44 @@
+﻿@model IEnumerable<FPRMAspNetCoreMVC.Models.Apartment>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>Unit</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Bathrooms</th>
+            <th>Area (m²)</th>
+            <th>Monthly Rent</th>
+            <th>Registration Date</th>
+            <th>Available?</th>
+            <th>Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var apartment in Model)
+        {
+            <tr>
+                <td> <img src="@apartment.ImageData" width="100%" /></td>
+                <td>@apartment.Unit</td>
+                <td>@apartment.TypeApartment</td>
+                <td>@apartment.Description</td>
+                <td>@apartment.Bathrooms</td>
+                <td>@apartment.Area</td>
+                <td>@apartment.RentAmount</td>
+                <td>@apartment.RegistrationDate.ToShortDateString()</td>
+                <td>@(apartment.IsAvailable ? "Yes" : "No")</td>
+                <td>
+                    <a class="btn btn-info " asp-action="Details" asp-controller="Apartments" asp-route-id="@apartment.Id">Details</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No apartments found for this building.</p>
+}

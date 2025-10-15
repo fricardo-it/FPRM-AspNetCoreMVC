@@ -1,0 +1,29 @@
+﻿@model IEnumerable<FPRMAspNetCoreMVC.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Building Appointments";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Tenant</th>
+        <th>Appointment Date</th>
+        <th>Message</th>
+        <th>Confirmed?</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var appointment in Model)
+    {
+        <tr>
+            <td>@appointment.Tenant.Name</td>
+            <td>@appointment.AppointmentDate</td>
+            <td>@appointment.Message</td>
+            <td>@(appointment.IsConfirmed ? "Yes" : "No")</td>
+        </tr>
+    }
+    </tbody>
+</table>

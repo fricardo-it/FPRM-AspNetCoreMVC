@@ -1,0 +1,77 @@
+﻿@model IEnumerable<FPRMAspNetCoreMVC.Models.Message>
+
+@{
+    ViewData["Title"] = "Messages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-6">
+    <h4 class="float-start">@ViewData["Title"]</h4>
+</div>
+<div>
+    <a class="btn btn-primary float-end" asp-action="Create">New Message</a>
+<br>
+<hr />
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SenderMsg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Building)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Timestamp)
+        </th>
+
+
+        <th>
+            Reply
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SenderMsg.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Building.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Timestamp)
+                </td>
+
+                <td>
+                    @if (item.Replies.Any())
+                    {
+                            <i class="bi bi-exclamation-diamond-fill" style="font-size: 150%;"></i>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-warning"asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+</div>

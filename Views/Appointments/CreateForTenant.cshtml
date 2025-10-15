@@ -1,0 +1,64 @@
+﻿@model FPRMAspNetCoreMVC.Models.Appointment
+
+@{
+    ViewData["Title"] = "Create New Appointment";
+}
+
+<h4>@ViewData["Title"]</h4>
+<hr />
+<form id="createAppointmentForm" asp-action="CreateForTenant" method="post">
+    <div class="form-group">
+        <label asp-for="BuildingId">Building:</label>
+        <select id="buildingDropdown" class="form-control" asp-items="ViewBag.BuildingId"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="BuildingId">Apartment Unit:</label>
+        <select asp-for="BuildingId" class="form-control" id="apartmentDropdown" asp-items="ViewBag.ApartmentList"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AppointmentDate">Appointment Date:</label>
+        <input asp-for="AppointmentDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Message">Message:</label>
+        <input asp-for="Message" class="form-control" />
+    </div>
+ @*    <div class="form-group">
+        <label asp-for="IsConfirmed">Confirmed:</label>
+        <input asp-for="IsConfirmed" type="checkbox" />
+    </div> *@
+
+    <input type="hidden" id="selectedBuildingId" name="selectedBuildingId" />
+
+    <br />
+    <button type="submit" class="btn btn-success">Create</button>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#buildingDropdown").change(function () {
+                var selectedBuildingId = $(this).val();
+                $("#selectedBuildingId").val(selectedBuildingId);
+
+                $.get("/Appointments/GetApartmentsForBuilding?buildingId=" + selectedBuildingId, function (data) {
+                    $("#apartmentDropdown").empty();
+
+                    $.each(data, function (index, item) {
+                        $("#apartmentDropdown").append($('<option>').text(item.text).attr('value', item.value));
+                    });
+                }).fail(function () {
+                    console.log("Erro ao obter dados de apartamentos.");
+                });
+            });
+
+            // Antes de enviar o formulário, garantimos que o valor de selectedBuildingId esteja atualizado
+            $("#createAppointmentForm").submit(function () {
+                var selectedBuildingId = $("#buildingDropdown").val();
+                $("#selectedBuildingId").val(selectedBuildingId);
+            });
+        });
+    </script>
+}

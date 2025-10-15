@@ -1,0 +1,95 @@
+﻿@model FPRMAspNetCoreMVC.Models.User
+
+@{
+    ViewData["Title"] = "New User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@inject Microsoft.AspNetCore.Authorization.IAuthorizationService AuthorizationService
+
+<h4>@ViewData["Title"]</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                var adminAuthResult = await AuthorizationService.AuthorizeAsync(User, null, "AdminPolicy");
+                var isAdmin = adminAuthResult.Succeeded;
+
+                if (isAdmin)
+                {
+                    <div class="form-group">
+                        <label asp-for="UserRole" class="control-label">UserRole</label>
+                        <select asp-for="UserRole" class="form-control">
+                            <option value="Admin">Admin</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Tenant">Tenant</option>
+                        </select>
+                        <span asp-validation-for="UserRole" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    var managerAuthResult = await AuthorizationService.AuthorizeAsync(User, null, "ManagerPolicy");
+                    var isManager = managerAuthResult.Succeeded;
+
+                    if (isManager)
+                    {
+                        <div class="form-group">
+                            <label asp-for="UserRole" class="control-label">UserRole</label>
+                            <select asp-for="UserRole" class="form-control">
+                                <option value="Manager">Manager</option>
+                                <option value="Tenant">Tenant</option>
+                            </select>
+                            <span asp-validation-for="UserRole" class="text-danger"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <label asp-for="UserRole" class="control-label">UserRole</label>
+                            <input type="text" class="form-control" value="Tenant" disabled />
+                        </div>
+                    }
+                }
+            }
+            else // Usuário não autenticado
+            {
+                <div class="form-group">
+                    <label asp-for="UserRole" class="control-label">UserRole</label>
+                    <input type="text" class="form-control" value="Tenant" disabled />
+                </div>
+            }
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group float-end">
+                <br />
+                <input type="submit" value="Create" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

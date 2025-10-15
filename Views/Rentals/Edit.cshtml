@@ -1,0 +1,60 @@
+﻿@model FPRMAspNetCoreMVC.Models.Rental
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Rental</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ApartmentId" class="control-label"></label>
+                <select asp-for="ApartmentId" class="form-control" asp-items="ViewBag.ApartmentId"></select>
+                <span asp-validation-for="ApartmentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenantId" class="control-label"></label>
+                <select asp-for="TenantId" class="form-control" asp-items="ViewBag.TenantId"></select>
+                <span asp-validation-for="TenantId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InitialRentDate" class="control-label"></label>
+                <input asp-for="InitialRentDate" class="form-control" />
+                <span asp-validation-for="InitialRentDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinalRentDate" class="control-label"></label>
+                <input asp-for="FinalRentDate" class="form-control" />
+                <span asp-validation-for="FinalRentDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MonthlyRent" class="control-label"></label>
+                <input asp-for="MonthlyRent" class="form-control" />
+                <span asp-validation-for="MonthlyRent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

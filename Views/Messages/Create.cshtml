@@ -1,0 +1,55 @@
+﻿@model FPRMAspNetCoreMVC.Models.Message
+
+@{
+    ViewData["Title"] = "New Message";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>@ViewData["Title"] </h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="BuildingId" class="control-label"></label>
+                <select asp-for="BuildingId" class ="form-control" asp-items="ViewBag.BuildingId"></select>
+            </div>
+@*             <div class="form-group">
+                <label asp-for="SenderMsgId" class="control-label"></label>
+                <select asp-for="SenderMsgId" class ="form-control" asp-items="ViewBag.SenderMsgId"></select>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Timestamp" class="control-label"></label>
+                <input asp-for="Timestamp" class="form-control" />
+                <span asp-validation-for="Timestamp" class="text-danger"></span>
+            </div>
+@*             <div class="form-group">
+                <label asp-for="Replies" class="control-label"></label>
+                <input asp-for="Replies" class="form-control" />
+                <span asp-validation-for="Replies" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <br/>
+                <input type="submit" value="Create" class="btn btn-primary"/>
+                <a class="btn btn-secondary"asp-action="Index">Cancel</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

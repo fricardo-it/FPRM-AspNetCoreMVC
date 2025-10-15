@@ -1,0 +1,145 @@
+﻿@model IEnumerable<FPRMAspNetCoreMVC.Models.Building>
+
+@{
+    ViewData["Title"] = "Buildings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-md-6">
+    <h1 class="float-start">@ViewData["Title"]</h1>
+    <br>
+</div>
+
+<div>
+    @if ((bool)ViewBag.ShowCreateButton)
+    {
+        <a class="btn btn-primary float-end" asp-action="Create">New Building</a>
+    }
+    <br>
+    <hr />
+    <form asp-action="Index" method="get">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search" name="filter">
+            <div class="input-group-text">
+                <input type="checkbox" id="onlyActive" name="onlyActive" value="true">
+                <label for="onlyActive"> Only Active? </label>
+            </div>
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <button type="submit" class="btn btn-link" name="clearFilter">Clear Filter</button>
+
+        </div>
+        <input type="hidden" name="onlyActive" value="false">
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageData)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConstructionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RegistrationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Street)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Province)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PostalCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        @*             <th>
+                @Html.DisplayNameFor(model => model.Manager)
+            </th> *@
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @if (item.ImageData != null && item.ImageData.Length > 0)
+            {
+                <img src="data:image;base64,@Convert.ToBase64String(item.ImageData)" alt="Building Image" style="max-width: 250px; max-height: 250px;" />
+            }
+            else
+            {
+                <span>No image available</span>
+            }
+        </td>
+@*         <td>
+            @Html.DisplayFor(modelItem => item.ImageData)
+        </td> *@
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConstructionDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegistrationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Street)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Province)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostalCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+
+        @*             <td>
+                @Html.DisplayFor(modelItem => item.Manager.Name)
+            </td> *@
+        <td>
+            @if (ViewBag.ShowEditButton)
+            {
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil"></i></a>
+            }
+            @if (ViewBag.ShowDetailsButton)
+            {
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-info"></i></a>
+            }
+            @if (ViewBag.ShowDeleteButton)
+            {
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i></a>
+            }
+        </td>
+    </tr>
+}
+    </tbody>
+</table>

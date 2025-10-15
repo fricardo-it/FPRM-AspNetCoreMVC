@@ -1,0 +1,61 @@
+﻿@model IEnumerable<FPRMAspNetCoreMVC.Models.Rental>
+
+@{
+    ViewData["Title"] = "Rentals";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-6">
+    <h4 class="float-start">@ViewData["Title"]</h4>
+    <br>
+</div>
+
+<div>
+    @if ((bool)ViewBag.ShowCreateButton)
+    {
+        <a class="btn btn-primary float-end" asp-action="Create">New Rental</a>
+    }
+    <br><br>
+</div>
+
+<table class="table table-hover">
+    <thead class="table-secondary">
+    <tr>
+        <th style="width: 15%;">Tenant</th>
+        <th style="width: 15%;">Apartment</th>
+        <th style="width: 15%;">@Html.DisplayNameFor(model => model.InitialRentDate)</th>
+        <th style="width: 15%;">@Html.DisplayNameFor(model => model.FinalRentDate)</th>
+        <th style="width: 15%;">@Html.DisplayNameFor(model => model.MonthlyRent)</th>
+        <th style="width: 20%;">@Html.DisplayNameFor(model => model.Description)</th>
+
+        <th style="width: 5%;"></th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="width: 15%;">@Html.DisplayFor(modelItem => item.Tenant.Name)</td>
+                <td style="width: 15%;">@Html.DisplayFor(modelItem => item.Apartment.Unit)</td>
+                <td style="width: 15%;">@Html.DisplayFor(modelItem => item.InitialRentDate)</td>
+                <td style="width: 15%;">@Html.DisplayFor(modelItem => item.FinalRentDate)</td>
+                <td style="width: 15%;">@Html.DisplayFor(modelItem => item.MonthlyRent)</td>
+                <td style="width: 20%;">@Html.DisplayFor(modelItem => item.Description)</td>
+                <td>
+                    @if (ViewBag.ShowEditButton)
+                    {
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil"></i></a>
+                    }
+                    @if (ViewBag.ShowDetailsButton)
+                    {
+                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-info"></i></a>
+                    }
+                    @if (ViewBag.ShowDeleteButton)
+                    {
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i></a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
